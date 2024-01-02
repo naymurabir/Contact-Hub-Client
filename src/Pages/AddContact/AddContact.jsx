@@ -2,11 +2,13 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const AddContact = () => {
 
     const { user } = useAuth()
     const axiosPublic = useAxiosPublic()
+    const navigate = useNavigate()
 
     const {
         reset,
@@ -18,7 +20,7 @@ const AddContact = () => {
         const newContact = {
             name: data.name,
             contact_email: data.contact_email,
-            phone: parseInt(data.phone),
+            phone: data.phone,
             image: data.image,
             address: data.address,
             email: user?.email
@@ -37,6 +39,7 @@ const AddContact = () => {
                         showConfirmButton: false,
                         timer: 2000
                     });
+                    navigate('/allContacts')
                 }
             })
     }
@@ -69,7 +72,7 @@ const AddContact = () => {
                             <label className="label">
                                 <span className="label-text font-semibold ">Phone</span>
                             </label>
-                            <input {...register("phone")} type="number" name="phone" placeholder="Phone..." className="input input-bordered w-full text-sm max-w-xs focus:outline-0" required />
+                            <input {...register("phone")} type="text" name="phone" placeholder="Phone..." className="input input-bordered w-full text-sm max-w-xs focus:outline-0" required />
                         </div>
 
                         <div className="form-control w-full max-w-xs">
