@@ -1,10 +1,98 @@
+import { useForm } from "react-hook-form";
+import useAuth from "../../Hooks/useAuth";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
 const AddContact = () => {
+
+    const { user } = useAuth()
+    const axiosPublic = useAxiosPublic()
+
+    const {
+        reset,
+        register,
+        handleSubmit,
+    } = useForm()
+
+    const onSubmit = async (data) => {
+        const newContact = {
+            name: data.name,
+            contact_email: data.contact_email,
+            phone: parseInt(data.phone),
+            image: data.image,
+            address: data.address,
+            email: user?.email
+
+        }
+        console.log(newContact);
+
+        axiosPublic.post('/contacts', newContact)
+            .then(res => {
+                if (res.data.insertedId) {
+                    reset()
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "A new contact has been added successfully",
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            })
+    }
+
     return (
-        <div>
-            <h2>Add Contact Page</h2>
+        <div className='max-w-screen-xl mx-auto px-2 md:px-10 lg:px-20 pt-24'>
+            <h2 className="text-2xl font-bold text-center mb-4 text-[#4F79AC]">Add A Contact</h2>
+            <div className="bg-white border-2 border-[#4F79AC] p-2 md:p-5 lg:p-10 lg:w-8/12 mx-auto">
+
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="flex flex-col md:flex-row gap-5 mt-3 justify-center">
+                        <div className="form-control w-full max-w-xs">
+                            <label className="label">
+                                <span className="label-text font-semibold ">Name</span>
+                            </label>
+                            <input {...register("name")} name="name" type="text" placeholder="Name..." className="input input-bordered input-md w-full max-w-2xl focus:outline-0" required />
+                        </div>
+
+                        <div className="form-control w-full max-w-xs">
+                            <label className="label">
+                                <span className="label-text font-semibold ">Email</span>
+                            </label>
+                            <input {...register("contact_email")} type="text" name="contact_email" placeholder="Email..." className="input input-bordered w-full text-sm max-w-xs focus:outline-0" />
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col md:flex-row gap-5 mt-3 justify-center">
+
+                        <div className="form-control w-full max-w-xs">
+                            <label className="label">
+                                <span className="label-text font-semibold ">Phone</span>
+                            </label>
+                            <input {...register("phone")} type="number" name="phone" placeholder="Phone..." className="input input-bordered w-full text-sm max-w-xs focus:outline-0" required />
+                        </div>
+
+                        <div className="form-control w-full max-w-xs">
+                            <label className="label">
+                                <span className="label-text font-semibold ">Profile Picture</span>
+                            </label>
+                            <input {...register("image")} type="text" name="image" placeholder="Image URL..." className="input input-bordered w-full text-sm max-w-xs focus:outline-0" required />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label className="label">
+                            <span className="label-text font-semibold ">Address</span>
+                        </label>
+                        <textarea {...register("address")} name="address" id="" cols="20" rows="5" placeholder="Address..." className="input focus:outline-0 input-bordered w-full text-sm h-[100px]" required ></textarea>
+                    </div>
+
+                    <button className="px-8 py-2.5 leading-5  mt-2 text-white transition-colors duration-300 transform bg-[#3a71e9] rounded-md hover:bg-[#6592f5] focus:outline-none focus:bg-[#6592f5] font-semibold w-full">Add Contact</button>
+                </form>
+            </div>
         </div>
     );
 };
+
 
 export default AddContact;
