@@ -35,7 +35,7 @@ const router = createBrowserRouter([{
         {
             path: '/updateContact/:id',
             element: <UpdateContact></UpdateContact>,
-            loader: ({ params }) => fetch(`http://localhost:5000/updateContact/${params.id}`)
+            loader: ({ params }) => fetch(`https://contact-management-server-side.vercel.app/updateContact/${params.id}`)
         }
     ]
 }])
