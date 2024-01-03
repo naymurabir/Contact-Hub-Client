@@ -6,6 +6,7 @@ import Register from "../Pages/Register/Register";
 import AddContact from "../Pages/AddContact/AddContact";
 import AllContacts from "../Pages/AllContacts/AllContacts";
 import UpdateContact from "../Pages/UpdateContact/UpdateContact";
+import PrivateRoutes from "../Pages/PrivateRoutes/PrivateRoutes";
 
 const router = createBrowserRouter([{
     path: '/',
@@ -21,7 +22,7 @@ const router = createBrowserRouter([{
         },
         {
             path: '/allContacts',
-            element: <AllContacts></AllContacts>
+            element: <PrivateRoutes><AllContacts></AllContacts></PrivateRoutes>
         },
         {
             path: '/login',
