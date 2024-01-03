@@ -10,7 +10,12 @@ git clone https://github.com/naymurabir/Contact-Hub-Client
 - Run this command to install the project:
 ```terminal
 npm i 
-``` 
+```
+- If there occurs any error, run this command, otherwise skip this:
+```terminal
+npm i --f 
+```
+
 - Create an .env.local file to root directory and paste these code to .env.local file: 
 ```terminal
 VITE_APIKEY=AIzaSyApxGkULhjGKFSfkI-XYexok38LbsU27Jo
