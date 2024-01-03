@@ -31,5 +31,11 @@ VITE_APPID=1:690454051926:web:0acfef974c5a63c9a74ff7
 npm run dev
 ```
 
+## Please sign up using email & password / google before accessing All contacts page. 
+
+## An authentication system has been integrated for users to use this application.
+
+## Note that: Only email / user based contacts will be displayed in the All contacts page.
+
 
 
