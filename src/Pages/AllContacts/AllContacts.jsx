@@ -4,6 +4,7 @@ import AllContact from "./AllContact";
 import swal from "sweetalert";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 
 const AllContacts = () => {
@@ -26,6 +27,45 @@ const AllContacts = () => {
                 visible={true}
             />
         </div>
+    }
+
+    const handleMarkAsFavorite = (contact) => {
+        axiosPublic.put(`/markFavorite?id=${contact._id}`)
+            .then(res => {
+                console.log(res.data);
+                if (res.data.modifiedCount > 0) {
+                    refetch()
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: "This Contact has been added to favorite!",
+                        showConfirmButton: false,
+                        background: '#343436',
+                        heightAuto: '100px',
+                        color: 'white',
+                        timer: 2000
+                    })
+                }
+            })
+    }
+
+    const handleRemoveFavorite = (contact) => {
+        axiosPublic.put(`/markFavorite/remove?id=${contact._id}`)
+            .then(res => {
+                if (res.data.modifiedCount > 0) {
+                    refetch()
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: "This contact has been removed from favorite!",
+                        showConfirmButton: false,
+                        background: '#343436',
+                        heightAuto: '100px',
+                        color: 'white',
+                        timer: 2000
+                    })
+                }
+            })
     }
 
     const handleUpdateContact = (id) => {
@@ -76,7 +116,7 @@ const AllContacts = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {
-                    allContacts?.map(contact => <AllContact key={contact._id} contact={contact} handleDeleteContact={handleDeleteContact} handleUpdateContact={handleUpdateContact} contactsUpdate={contactsUpdate} ></AllContact>)
+                    allContacts?.map(contact => <AllContact key={contact._id} contact={contact} handleDeleteContact={handleDeleteContact} handleUpdateContact={handleUpdateContact} contactsUpdate={contactsUpdate} handleMarkAsFavorite={handleMarkAsFavorite} handleRemoveFavorite={handleRemoveFavorite}></AllContact>)
                 }
             </div>
         </div>

@@ -1,5 +1,5 @@
 import { AiOutlineDelete } from "react-icons/ai";
-import { MdManageAccounts } from "react-icons/md";
+import { MdManageAccounts, MdFavorite } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
@@ -7,9 +7,9 @@ import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const AllContact = ({ contact, handleDeleteContact, handleUpdateContact, contactsUpdate }) => {
+const AllContact = ({ contact, handleDeleteContact, handleUpdateContact, contactsUpdate, handleMarkAsFavorite, handleRemoveFavorite }) => {
 
-    const { _id, name, contact_email, phone, address, image } = contact
+    const { _id, name, contact_email, phone, address, image, status } = contact
 
     const { user } = useAuth()
     const axiosPublic = useAxiosPublic()
@@ -33,7 +33,6 @@ const AllContact = ({ contact, handleDeleteContact, handleUpdateContact, contact
             e.currentTarget.reset()
         }
     }
-
 
     return (
         <div>
@@ -112,8 +111,15 @@ const AllContact = ({ contact, handleDeleteContact, handleUpdateContact, contact
                         </dialog>
 
                         <Link to={`/updateContact/${_id}`}>
-                            <button> <FaRegEdit className="text-2xl text-blue-900"></FaRegEdit> </button>
+                            <button> <FaRegEdit className="text-xl text-blue-900"></FaRegEdit> </button>
                         </Link>
+
+                        {
+                            status === "favorite" ?
+                                <button onClick={() => handleRemoveFavorite(contact)} className="text-2xl text-red-600 "><MdFavorite ></MdFavorite > </button>
+                                :
+                                <button onClick={() => handleMarkAsFavorite(contact)} className="text-2xl text-blue-900"><MdFavorite ></MdFavorite > </button>
+                        }
 
                         <button onClick={() => handleDeleteContact(_id)} className="text-2xl text-blue-900"><AiOutlineDelete></AiOutlineDelete></button>
                     </div>
