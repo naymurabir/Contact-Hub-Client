@@ -5,6 +5,7 @@ import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import AddContact from "../Pages/AddContact/AddContact";
 import AllContacts from "../Pages/AllContacts/AllContacts";
+import UpdateContact from "../Pages/UpdateContact/UpdateContact";
 
 const router = createBrowserRouter([{
     path: '/',
@@ -30,6 +31,11 @@ const router = createBrowserRouter([{
             path: '/register',
             element: <Register></Register>
         },
+        {
+            path: '/updateContact/:id',
+            element: <UpdateContact></UpdateContact>,
+            loader: ({ params }) => fetch(`http://localhost:5000/updateContact/${params.id}`)
+        }
     ]
 }])
 

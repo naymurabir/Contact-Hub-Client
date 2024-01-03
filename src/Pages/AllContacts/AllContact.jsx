@@ -1,7 +1,39 @@
+import { AiOutlineDelete } from "react-icons/ai";
+import { MdManageAccounts } from "react-icons/md";
+import { FaRegEdit } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const AllContact = ({ contact, handleDeleteContact }) => {
+const AllContact = ({ contact, handleDeleteContact, handleUpdateContact, contactsUpdate }) => {
 
     const { _id, name, contact_email, phone, address, image } = contact
+
+    const { user } = useAuth()
+    const axiosPublic = useAxiosPublic()
+
+    const handleUpdateContactModal = async (e) => {
+        e.preventDefault()
+        const form = new FormData(e.currentTarget)
+        const name = form.get('name')
+        const contact_email = form.get('contact_email')
+        const phone = form.get('phone')
+        const image = form.get('image')
+        const address = form.get('address')
+        const email = user?.email
+
+        const updateContact = { name, contact_email, phone, image, address, email }
+
+        const { data } = await axiosPublic.put(`/updateContact/${contactsUpdate._id}`, updateContact)
+
+        if (data.modifiedCount > 0) {
+            toast("Contact has been updated successfully!")
+            e.currentTarget.reset()
+        }
+    }
+
 
     return (
         <div>
@@ -28,13 +60,66 @@ const AllContact = ({ contact, handleDeleteContact }) => {
                         <p className="text-[#0d3b74] font-semibold">{address}</p>
                     </div>
 
-                    <div>
-                        <button className="bg-[#1e66be] text-white px-2 py-1 rounded font-semibold w-full">Contact Management</button>
+                    <div className="flex justify-around items-center bg-gray-200 px-3 py-2 rounded">
+                        <button onClick={() => document.getElementById('my_modal_5').showModal()} className="text-2xl text-blue-900"> <span onClick={() => handleUpdateContact(_id)}><MdManageAccounts></MdManageAccounts></span> </button>
 
-                        <button onClick={() => handleDeleteContact(_id)} className="bg-[#d11515] text-white px-2 py-1 rounded font-semibold w-full mt-2">Delete</button>
+                        {/* Modal */}
+                        <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+                            <div className="modal-box">
+
+                                <form onSubmit={handleUpdateContactModal}>
+                                    <label className="form-control w-full max-w-md">
+                                        <div className="label">
+                                            <span className="label-text font-bold">Name</span>
+                                        </div>
+                                        <input defaultValue={contactsUpdate.name} name="name" type="text" placeholder="Name..." className="input focus:outline-0 input-bordered w-full max-w-md" />
+                                    </label>
+                                    <label className="form-control w-full max-w-md">
+                                        <div className="label">
+                                            <span className="label-text font-bold">Email</span>
+                                        </div>
+                                        <input defaultValue={contactsUpdate.contact_email} name="contact_email" type="text" placeholder="Email..." className="input focus:outline-0 input-bordered w-full max-w-md" />
+                                    </label>
+                                    <label className="form-control w-full max-w-md">
+                                        <div className="label">
+                                            <span className="label-text font-bold">Phone</span>
+                                        </div>
+                                        <input defaultValue={contactsUpdate.phone} name="phone" type="text" placeholder="Phone..." className="input focus:outline-0 input-bordered w-full max-w-md" />
+                                    </label>
+                                    <label className="form-control w-full max-w-md">
+                                        <div className="label">
+                                            <span className="label-text font-bold">Image URL</span>
+                                        </div>
+                                        <input defaultValue={contactsUpdate.image} name="image" type="text" placeholder="Image URL..." className="input focus:outline-0 input-bordered w-full max-w-md" />
+                                    </label>
+                                    <label className="form-control w-full max-w-md">
+                                        <div className="label">
+                                            <span className="label-text font-bold">Address</span>
+                                        </div>
+                                        <input defaultValue={contactsUpdate.address} name="address" type="text" placeholder="Address..." className="input focus:outline-0 input-bordered w-full max-w-md" />
+                                    </label>
+                                    <div className="flex justify-center mt-3">
+                                        <button className='text-white bg-[#0e3361] px-5 py-1 rounded'>Update</button>
+                                    </div>
+                                </form>
+
+                                <div className="modal-action">
+                                    <form method="dialog">
+                                        <button className="text-white bg-[#0e3361] px-5 py-1 rounded">Close</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </dialog>
+
+                        <Link to={`/updateContact/${_id}`}>
+                            <button> <FaRegEdit className="text-2xl text-blue-900"></FaRegEdit> </button>
+                        </Link>
+
+                        <button onClick={() => handleDeleteContact(_id)} className="text-2xl text-blue-900"><AiOutlineDelete></AiOutlineDelete></button>
                     </div>
                 </div>
             </div>
+            <ToastContainer></ToastContainer>
         </div>
     );
 };

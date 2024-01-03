@@ -3,12 +3,15 @@ import useAllContacts from "../../Hooks/useAllContacts";
 import AllContact from "./AllContact";
 import swal from "sweetalert";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { useState } from "react";
 
 
 const AllContacts = () => {
 
     const { allContacts, isPending, refetch } = useAllContacts()
     const axiosPublic = useAxiosPublic()
+
+    const [contactsUpdate, setUpdateContacts] = useState({})
 
     if (isPending) {
         return <div className="text-center flex justify-center items-center">
@@ -23,6 +26,14 @@ const AllContacts = () => {
                 visible={true}
             />
         </div>
+    }
+
+    const handleUpdateContact = (id) => {
+        const contactUpdate = allContacts.find(contact => contact._id === id)
+        console.log(contactUpdate);
+        if (contactUpdate) {
+            setUpdateContacts(contactUpdate)
+        }
     }
 
     const handleDeleteContact = (id) => {
@@ -65,7 +76,7 @@ const AllContacts = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {
-                    allContacts?.map(contact => <AllContact key={contact._id} contact={contact} handleDeleteContact={handleDeleteContact} ></AllContact>)
+                    allContacts?.map(contact => <AllContact key={contact._id} contact={contact} handleDeleteContact={handleDeleteContact} handleUpdateContact={handleUpdateContact} contactsUpdate={contactsUpdate} ></AllContact>)
                 }
             </div>
         </div>
