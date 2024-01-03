@@ -5,6 +5,7 @@ import swal from "sweetalert";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { Helmet } from 'react-helmet-async';
 
 
 const AllContacts = () => {
@@ -102,22 +103,27 @@ const AllContacts = () => {
     }
 
     return (
-        <div className="max-w-screen-xl mx-auto px-2 md:px-12 lg:px-24 pt-16 md:pt-24">
-            <div className="pt-5 text-center lg:w-3/4 mx-auto">
-                <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-[#111D45]">All Contacts</h1>
-                <hr className="my-3" />
-                <p>These are the contacts which are added by the specific user.</p>
-                <div className="">
-                    <span className="inline-block w-40 h-1 bg-blue-500 rounded-full"></span>
-                    <span className="inline-block w-3 h-1 ml-1 bg-blue-500 rounded-full"></span>
-                    <span className="inline-block w-1 h-1 ml-1 bg-blue-500 rounded-full"></span>
+        <div>
+            <Helmet>
+                <title> All Contacts </title>
+            </Helmet>
+            <div className="max-w-screen-xl mx-auto px-2 md:px-12 lg:px-24 pt-16 md:pt-24">
+                <div className="pt-5 text-center lg:w-3/4 mx-auto">
+                    <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-[#111D45]">All Contacts</h1>
+                    <hr className="my-3" />
+                    <p>These are the contacts which are added by the specific user.</p>
+                    <div className="">
+                        <span className="inline-block w-40 h-1 bg-blue-500 rounded-full"></span>
+                        <span className="inline-block w-3 h-1 ml-1 bg-blue-500 rounded-full"></span>
+                        <span className="inline-block w-1 h-1 ml-1 bg-blue-500 rounded-full"></span>
+                    </div>
                 </div>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {
-                    allContacts?.map(contact => <AllContact key={contact._id} contact={contact} handleDeleteContact={handleDeleteContact} handleUpdateContact={handleUpdateContact} contactsUpdate={contactsUpdate} handleMarkAsFavorite={handleMarkAsFavorite} handleRemoveFavorite={handleRemoveFavorite}></AllContact>)
-                }
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    {
+                        allContacts?.map(contact => <AllContact key={contact._id} contact={contact} handleDeleteContact={handleDeleteContact} handleUpdateContact={handleUpdateContact} contactsUpdate={contactsUpdate} handleMarkAsFavorite={handleMarkAsFavorite} handleRemoveFavorite={handleRemoveFavorite}></AllContact>)
+                    }
+                </div>
             </div>
         </div>
     );

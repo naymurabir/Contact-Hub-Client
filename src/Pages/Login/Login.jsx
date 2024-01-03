@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
 import SocialLogin from "../SocialLogin/SocialLogin";
+import { Helmet } from 'react-helmet-async';
 
 const Login = () => {
 
@@ -50,53 +51,58 @@ const Login = () => {
     }
 
     return (
-        <div className='max-w-screen-xl mx-auto px-2 md:px-12 lg:px-20'>
-            <div className="hero min-h-screen">
-                <div className="card flex-shrink-0  max-w-sm  border border-gray-500 lg:w-[50%] mt-20">
-                    <form onSubmit={handleLogin}>
-                        <h2 className='text-2xl font-semibold text-center mt-5'>Log In</h2>
-                        <div className="px-10 py-3">
+        <div>
+            <Helmet>
+                <title> Login </title>
+            </Helmet>
+            <div className='max-w-screen-xl mx-auto px-2 md:px-12 lg:px-20'>
+                <div className="hero min-h-screen">
+                    <div className="card flex-shrink-0  max-w-sm  border border-gray-500 lg:w-[50%] mt-20">
+                        <form onSubmit={handleLogin}>
+                            <h2 className='text-2xl font-semibold text-center mt-5'>Log In</h2>
+                            <div className="px-10 py-3">
 
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text font-semibold">Email</span>
-                                </label>
-                                <input
-                                    name='email'
-                                    type="email"
-                                    placeholder="Email..." className="input input-bordered focus:outline-0" required />
-                            </div>
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text font-semibold">Password</span>
-                                </label>
-                                <input
-                                    name='password'
-                                    type="password" placeholder="password" className="input input-bordered focus:outline-0" required />
-                            </div>
+                                <div className="form-control">
+                                    <label className="label">
+                                        <span className="label-text font-semibold">Email</span>
+                                    </label>
+                                    <input
+                                        name='email'
+                                        type="email"
+                                        placeholder="Email..." className="input input-bordered focus:outline-0" required />
+                                </div>
+                                <div className="form-control">
+                                    <label className="label">
+                                        <span className="label-text font-semibold">Password</span>
+                                    </label>
+                                    <input
+                                        name='password'
+                                        type="password" placeholder="password" className="input input-bordered focus:outline-0" required />
+                                </div>
 
-                            <div className="form-control">
-                                <button className='btn btn-success mt-2'>Login</button>
-                            </div>
+                                <div className="form-control">
+                                    <button className='btn btn-success mt-2'>Login</button>
+                                </div>
 
-                            <div className='flex justify-center'>
-                                <label className="label">
-                                    <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
-                                </label>
-                            </div>
+                                <div className='flex justify-center'>
+                                    <label className="label">
+                                        <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+                                    </label>
+                                </div>
 
-                            <div>
-                                <h3 className='text-xs text-center font-semibold'>Or sign in with</h3>
-                                <div className='flex justify-center items-center gap-4 mt-3'>
-                                    <SocialLogin></SocialLogin>
+                                <div>
+                                    <h3 className='text-xs text-center font-semibold'>Or sign in with</h3>
+                                    <div className='flex justify-center items-center gap-4 mt-3'>
+                                        <SocialLogin></SocialLogin>
+                                    </div>
+                                </div>
+
+                                <div className='text-center'>
+                                    <h2 className='text-sm'>Do not have an account? <Link className='text-[#f3411d] font-semibold' to="/register">Sign Up</Link> </h2>
                                 </div>
                             </div>
-
-                            <div className='text-center'>
-                                <h2 className='text-sm'>Do not have an account? <Link className='text-[#f3411d] font-semibold' to="/register">Sign Up</Link> </h2>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
